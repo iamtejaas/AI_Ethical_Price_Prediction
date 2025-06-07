@@ -12,13 +12,13 @@
 
   *Multi-factor Analysis*: Incorporates a wide array of factors including:
 
-    production_cost
-    fair_wage_multiplier
-    sustainability_score
-    local_demand_index
-    market_avg_price_city
-    profit_margin_standard
-    regulatory_adjustment
+  production_cost
+  fair_wage_multiplier
+  sustainability_score
+  local_demand_index
+  market_avg_price_city
+  profit_margin_standard
+  regulatory_adjustment
 
   *Machine Learning Powered*: Utilizes a RandomForestRegressor for its ability to handle complex relationships and provide accurate predictions.
 
@@ -26,7 +26,7 @@
 
   *Model Persistence*: The trained model and label encoders are saved, allowing for easy deployment and future use without retraining.<br>
 **Files in this Repository**
-    *Project 1 (1).ipynb*: The main Jupyter Notebook that contains the complete workflow of the project. This includes:
+  *Project 1 (1).ipynb*: The main Jupyter Notebook that contains the complete workflow of the project. This includes:
                           Data loading and initial exploration.
                           Feature engineering and data preprocessing (e.g., LabelEncoder for categorical features).
                           Model training (RandomForestRegressor).
@@ -34,8 +34,8 @@
                           A custom function predict_ethical_price to demonstrate how to get predictions for new product inputs.
                           Saving the trained model and label encoders.
 
-    *ethical_pricing_mock_dataset_extended.csv*: The synthetic dataset used to train and test the ethical pricing model. Each row represents a unique product-location combination with various pricing and ethical attributes.
+  *ethical_pricing_mock_dataset_extended.csv*: The synthetic dataset used to train and test the ethical pricing model. Each row represents a unique product-location combination with various pricing and ethical attributes.
 
-    *ethical_price_model.pkl*: A serialized (pickled) file containing the trained RandomForestRegressor model. This allows for direct loading and use of the model without needing to retrain it.
+  *ethical_price_model.pkl*: A serialized (pickled) file containing the trained RandomForestRegressor model. This allows for direct loading and use of the model without needing to retrain it.
 
-    *label_encoders.pkl*: A serialized (pickled) file containing the LabelEncoder objects used for transforming categorical features (item_category, city, marketplace) into numerical representations during training. These are essential for consistent preprocessing when making new predictions.
+  *label_encoders.pkl*: A serialized (pickled) file containing the LabelEncoder objects used for transforming categorical features (item_category, city, marketplace) into numerical representations during training. These are essential for consistent preprocessing when making new predictions.
