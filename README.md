@@ -2,10 +2,10 @@
   An Ethical Pricing Prediction Model that uses machine learning to determine fair and sustainable product prices, considering factors like production costs, fair wages, and environmental impact.<br>
 
 ## Ethical Pricing Prediction Model
-  This repository houses the code and data for an Ethical Pricing Prediction Model, designed to determine fair and sustainable prices for various products. The project leverages machine learning to integrate crucial ethical considerations such as production costs, fair wages, environmental sustainability, and local market dynamics into pricing strategies.
+  This repository houses the code and data for an Ethical Pricing Prediction Model, designed to determine fair and sustainable prices for various products. The project leverages machine learning to integrate crucial ethical considerations such as production costs, fair wages, environmental sustainability, and local market dynamics into pricing strategies.<br><br>
 
 **Project Overview**
-  The primary goal of this project is to create a robust model that can suggest an ethical price range and a specific ethical price for products. This is achieved by training a * *RandomForestRegressor* * on a synthetic dataset that simulates real-world pricing factors. The model aims to help businesses establish prices that are not only competitive but also socially responsible and environmentally conscious.
+  The primary goal of this project is to create a robust model that can suggest an ethical price range and a specific ethical price for products. This is achieved by training a * *RandomForestRegressor* * on a synthetic dataset that simulates real-world pricing factors. The model aims to help businesses establish prices that are not only competitive but also socially responsible and environmentally conscious.<br><br>
 
 **Key Features**
   *Ethical Price Prediction*: Generates a recommended ethical price and an acceptable price range for a given product, category, and city.
@@ -24,7 +24,7 @@
 
   *Comprehensive Dataset*: Built upon ethical_pricing_mock_dataset_extended.csv, a detailed mock dataset containing diverse product entries, categories, and geographical locations.
 
-  *Model Persistence*: The trained model and label encoders are saved, allowing for easy deployment and future use without retraining.<br>
+  *Model Persistence*: The trained model and label encoders are saved, allowing for easy deployment and future use without retraining.<br><br>
 **Files in this Repository**
   *Project 1 (1).ipynb*: The main Jupyter Notebook that contains the complete workflow of the project. This includes:
                           Data loading and initial exploration.
