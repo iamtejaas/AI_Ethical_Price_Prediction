@@ -24,7 +24,7 @@
 
   *Comprehensive Dataset*: Built upon ethical_pricing_mock_dataset_extended.csv, a detailed mock dataset containing diverse product entries, categories, and geographical locations.
 
-  *Model Persistence*: The trained model and label encoders are saved, allowing for easy deployment and future use without retraining.
+  *Model Persistence*: The trained model and label encoders are saved, allowing for easy deployment and future use without retraining.<br>
 **Files in this Repository**
     *Project 1 (1).ipynb*: The main Jupyter Notebook that contains the complete workflow of the project. This includes:
                           Data loading and initial exploration.
