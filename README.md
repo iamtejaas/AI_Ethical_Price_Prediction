@@ -1,23 +1,23 @@
 
-# AI Ethical Price Prediction
+# 🧠 AI Ethical Price Prediction
 
 An Ethical Pricing Prediction Model that uses machine learning to determine fair and sustainable product prices, considering factors like production costs, fair wages, and environmental impact.
 
 ---
 
-## Ethical Pricing Prediction Model
+## 📊 Ethical Pricing Prediction Model
 
 This repository houses the code and web app for an Ethical Pricing Prediction Model, designed to determine fair and sustainable prices for various products. The project leverages machine learning to integrate crucial ethical considerations such as production costs, fair wages, environmental sustainability, and local market dynamics into pricing strategies.
 
 ---
 
-## Project Overview
+## 🧠 Project Overview
 
 The primary goal of this project is to create a robust model that can suggest an ethical price range and a specific ethical price for products. This is achieved by training a **RandomForestRegressor** on a synthetic dataset that simulates real-world pricing factors. The model helps businesses establish prices that are not only competitive but also socially responsible and environmentally conscious.
 
 ---
 
-## Key Features
+##  ✨ Key Features
 
 - **Ethical Price Prediction**: Generates a recommended ethical price and an acceptable price range for a given product, category, and city.
 
@@ -43,7 +43,7 @@ The primary goal of this project is to create a robust model that can suggest an
 
 ---
 
-## Files in this Repository
+## 📁 Files in this Repository
 
 ```
 ├── app.py                   # Flask backend with routing and form handling
@@ -59,7 +59,7 @@ The primary goal of this project is to create a robust model that can suggest an
 
 ---
 
-## Routes
+## 🌐 Routes
 
 - `/` - Main Prediction Interface
 - `/compare` - Compare a product’s price between two cities
@@ -68,7 +68,7 @@ The primary goal of this project is to create a robust model that can suggest an
 
 ---
 
-## Model Details
+## 🧪 Model Details
 
 - **Model**: RandomForestRegressor
 - **Preprocessing**: Label Encoding for `item_category`, `item_name`, `city`
@@ -77,3 +77,8 @@ The primary goal of this project is to create a robust model that can suggest an
   - Price MSE
   - Ethical Classification Accuracy
 - **Persistence**: Notebooks save trained models and encoders for reuse
+  
+---
+
+## ⚠️ Disclaimer
+The Ethical Price Predictor estimates product prices by analyzing factors such as production cost, fair wage multipliers, sustainability, and demand. While the system leverages machine learning and fairness-driven metrics, all outputs are indicative and should be interpreted as supportive insights. Users are encouraged to apply their own judgment and consider additional data when making pricing-related decisions.
