@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ethical Price Predictor</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right top, #00c9ff, #92fe9d);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  /* Tab navigation outside the container */
+  .tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+  }
+  .tab-btn {
+    background: #0288d1;
+    color: white;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+  .tab-btn:hover {
+    background: #026fa1;
+  }
+  .tab-btn.active {
+    background: #01579b;
+    box-shadow: 0 4px 8px rgba(1, 87, 155, 0.6);
+  }
+
+  /* Container box */
+  .container {
+    width: 100%;
+    max-width: 1000px;
+    background: #ffffffcc;
+    padding: 30px;
+    border-radius: 0 12px 12px 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #01579b;
+    margin-bottom: 20px;
+  }
+
+  .info-box {
+    background-color: #e1f5fe;
+    border-left: 6px solid #158ccc;
+    padding: 16px 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    color: #01579b;
+    font-size: 15px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  label {
+    font-weight: 600;
+    color: #333;
+  }
+
+  select, input[type="submit"] {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  input[type="submit"] {
+    background: linear-gradient(to right, #0288d1, #42c5d6);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  input[type="submit"]:hover {
+    background: linear-gradient(to right, #13a8ed, #92fe9d);
+    transform: scale(1.03);
+  }
+
+  .results {
+    margin-top: 30px;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  .results h3, .results h4 {
+    color: #2c3e50;
+    margin: 10px 0;
+  }
+
+  .graph-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .graph-container img {
+    max-width: 100%;
+    width: 48%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+
+  @media (max-width: 768px) {
+    .graph-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .graph-container img {
+      width: 100%;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Hide tab content by default */
+  .tab-content {
+    display: none;
+  }
+  /* Show active tab content */
+  .tab-content.active {
+    display: block;
+  }
+
+  /* Bottom buttons container */
+  .floating-bottom-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.floating-bottom-buttons button,
+.floating-bottom-buttons a {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 20px;
+    background: linear-gradient(to right, #1976d2,#262726);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+.floating-bottom-buttons button:hover,
+.floating-bottom-buttons a:hover {
+    transform: scale(1.05);
+}
+
+.stats-table {
+  width: 100%;
+  margin-top: 30px;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background: #ffffff;
+}
+
+.stats-table th, .stats-table td {
+  padding: 14px 18px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+}
+
+.stats-table th {
+  background-color: #0288d1;
+  color: #fff;
+  font-weight: bold;
+}
+
+.stats-table tr:nth-child(even) {
+  background-color: #f2f9fc;
+}
+
+.stats-table tr:hover {
+  background-color: #e1f5fe;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<!-- Tabs navigation outside the container -->
+<div class="tabs">
+  <button class="tab-btn active" id="tab-predict-btn" onclick="switchTab('predict')">Price Prediction</button>
+  <button class="tab-btn" id="tab-compare-btn" onclick="switchTab('compare')">Compare Prices</button>
+</div>
+
+<!-- Container box -->
+<div class="container">
+  
+  <!-- Price Prediction Tab Content -->
+  <div id="tab-predict" class="tab-content active">
+    <h2>Ethical Price Prediction</h2>
+
+    <marquee>
+      <div class="info-box">
+        <h4>
+          This website helps you predict the ethical price of everyday retail items based on location and category.
+          It uses machine learning to evaluate fairness and compares average prices across online marketplaces and time periods.
+        </h4>
+      </div>
+    </marquee>
+
+    <form method="POST">
+      <label>Item Category:</label>
+      <select name="item_category" required onchange="updateItems()">
+        <option value="">-- Select Category --</option>
+        {% for cat in categories %}
+          <option value="{{ cat }}" {% if cat == category %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Item Name:</label>
+      <select name="item_name" required>
+        <option value="">-- Select Item --</option>
+        {% if category in category_items %}
+          {% for item in category_items[category] %}
+            <option value="{{ item }}" {% if item == item_name %}selected{% endif %}>{{ item }}</option>
+          {% endfor %}
+        {% endif %}
+      </select>
+
+      <label>City:</label>
+      <select name="city" required>
+        <option value="">-- Select City --</option>
+        {% for city_opt in cities %}
+          <option value="{{ city_opt }}" {% if city == city_opt %}selected{% endif %}>{{ city_opt }}</option>
+        {% endfor %}
+      </select>
+
+      <input type="submit" value="Predict Price" />
+    </form>
+
+    {% if result %}
+    <div class="results">
+      <h3>🔮 Predicted Price: ₹{{ result.predicted_price | round(2) }}</h3>
+      <h3>⚖️ Fairness Label: {{ result.fair_label }}</h3>
+      <h4>📊 Tier-3 Max Suggested Price: ₹{{ result.tier3_max | round(2) }}</h4>
+      <h4>📉 Price Prediction MSE: {{ result.mse_price }}</h4>
+      <h4>✅ Fairness Classification Accuracy: {{ (result.fairness_accuracy * 100) | round(2) }}%</h4>
+
+      <h4>💰 Average Market Price: ₹{{ result.avg_market_price | round(2) }}</h4>
+      <h4>🌿 Sustainability Score: {{ result.sustainability | round(2) }}</h4>
+      <h4>📊 Local Demand Index: {{ result.local_demand | round(2) }}</h4>
+      <h4>🏭 Production Cost: ₹{{ result.production_cost | round(2) }}</h4>
+      <h4>📈 Profit Margin: {{ (result.profit_margin * 100) | round(2) }}%</h4>
+      <h4>💵 Fair Wage Multiplier: {{ result.wage_score | round(2) }}</h4>
+
+      <div class="graph-container">
+        <img src="{{ url_for('static', filename='plot_trend.png') }}" alt="Monthly Price Trend" />
+        <img src="{{ url_for('static', filename='plot_marketplace.png') }}" alt="Marketplace Comparison" />
+        <img src="{{ url_for('static', filename='plot_distribution.png') }}" alt="Price Distribution Graph" />
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Compare Prices Tab Content -->
+  <div id="tab-compare" class="tab-content">
+    <h2>Compare Product Between Two Cities</h2>
+    <form method="POST" action="/compare">
+      <label>Item Category:</label>
+      <select name="comp_category" required onchange="updateCompareItems()">
+        {% for cat in categories %}
+          <option value="{{ cat }}">{{ cat }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Item Name:</label>
+      <select name="comp_item" required>
+        <option value="">-- Select Item --</option>
+        {% for item in category_items[categories[0]] %}
+          <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+      </select>
+
+      <label>City A:</label>
+      <select name="city_a" required>
+        {% for city in cities %}
+          <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+      </select>
+
+      <label>City B:</label>
+      <select name="city_b" required>
+        {% for city in cities %}
+          <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+      </select>
+
+      <input type="submit" value="Compare Prices" />
+    </form>
+  </div>
+
+</div>
+
+<!-- Bottom buttons container -->
+<div class="floating-bottom-buttons">
+    <form action="/history" method="get" style="flex: 1; margin: 0;">
+        <button type="submit">Check History</button>
+    </form>
+    <a href="/about" class="btn-about-us">About Us</a>
+</div>
+
+
+<script>
+  function switchTab(tabName) {
+    // Remove active from all tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    // Hide all tab content
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+    // Activate clicked tab button
+    document.getElementById('tab-' + tabName + '-btn').classList.add('active');
+    // Show clicked tab content
+    document.getElementById('tab-' + tabName).classList.add('active');
+  }
+
+  // Dynamic dropdown updates for item_name in prediction tab
+  function updateItems() {
+    const category = document.querySelector('select[name="item_category"]').value;
+    const itemSelect = document.querySelector('select[name="item_name"]');
+    itemSelect.innerHTML = '<option>Loading...</option>';
+
+    fetch('/get_items_for_category', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: 'category=' + encodeURIComponent(category)
+    })
+    .then(res => res.json())
+    .then(data => {
+      itemSelect.innerHTML = '<option value="">-- Select Item --</option>';
+      data.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item;
+        option.textContent = item;
+        itemSelect.appendChild(option);
+      });
+    })
+    .catch(err => {
+      console.error('Dropdown error:', err);
+      itemSelect.innerHTML = '<option value="">-- Load Failed --</option>';
+    });
+  }
+
+  // Dynamic dropdown updates for compare tab
+  function updateCompareItems() {
+    const category = document.querySelector('select[name="comp_category"]').value;
+    const itemSelect = document.querySelector('select[name="comp_item"]');
+    itemSelect.innerHTML = '<option>Loading...</option>';
+
+    fetch('/get_items_for_category', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: 'category=' + encodeURIComponent(category)
+    })
+    .then(res => res.json())
+    .then(data => {
+      itemSelect.innerHTML = '<option value="">-- Select Item --</option>';
+      data.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item;
+        option.textContent = item;
+        itemSelect.appendChild(option);
+      });
+    })
+    .catch(err => {
+      console.error('Dropdown error:', err);
+      itemSelect.innerHTML = '<option value="">-- Load Failed --</option>';
+    });
+  }
+
+  // About Us popup alert or modal placeholder
+  function showAbout() {
+    alert("Ethical Price Predictor\n\nCreated to help consumers and retailers promote fair pricing with ML.\n\nContact: support@example.com");
+  }
+</script>
+
+</body>
+</html>
