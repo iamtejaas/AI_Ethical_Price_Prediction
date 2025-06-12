@@ -1,41 +1,79 @@
-# AI_Ethical_Price_Prediction
-  An Ethical Pricing Prediction Model that uses machine learning to determine fair and sustainable product prices, considering factors like production costs, fair wages, and environmental impact.<br>
+
+# AI Ethical Price Prediction
+
+An Ethical Pricing Prediction Model that uses machine learning to determine fair and sustainable product prices, considering factors like production costs, fair wages, and environmental impact.
+
+---
 
 ## Ethical Pricing Prediction Model
-  This repository houses the code and data for an Ethical Pricing Prediction Model, designed to determine fair and sustainable prices for various products. The project leverages machine learning to integrate crucial ethical considerations such as production costs, fair wages, environmental sustainability, and local market dynamics into pricing strategies.<br><br>
 
-**Project Overview**
-  The primary goal of this project is to create a robust model that can suggest an ethical price range and a specific ethical price for products. This is achieved by training a * *RandomForestRegressor* * on a synthetic dataset that simulates real-world pricing factors. The model aims to help businesses establish prices that are not only competitive but also socially responsible and environmentally conscious.<br><br>
+This repository houses the code and web app for an Ethical Pricing Prediction Model, designed to determine fair and sustainable prices for various products. The project leverages machine learning to integrate crucial ethical considerations such as production costs, fair wages, environmental sustainability, and local market dynamics into pricing strategies.
 
-**Key Features**
-  *Ethical Price Prediction*: Generates a recommended ethical price and an acceptable price range for a given product, category, and city.
+---
 
-  *Multi-factor Analysis*: Incorporates a wide array of factors including:
+## Project Overview
 
-  production_cost
-  fair_wage_multiplier
-  sustainability_score
-  local_demand_index
-  market_avg_price_city
-  profit_margin_standard
-  regulatory_adjustment
+The primary goal of this project is to create a robust model that can suggest an ethical price range and a specific ethical price for products. This is achieved by training a **RandomForestRegressor** on a synthetic dataset that simulates real-world pricing factors. The model helps businesses establish prices that are not only competitive but also socially responsible and environmentally conscious.
 
-  *Machine Learning Powered*: Utilizes a RandomForestRegressor for its ability to handle complex relationships and provide accurate predictions.
+---
 
-  *Comprehensive Dataset*: Built upon ethical_pricing_mock_dataset_extended.csv, a detailed mock dataset containing diverse product entries, categories, and geographical locations.
+## Key Features
 
-  *Model Persistence*: The trained model and label encoders are saved, allowing for easy deployment and future use without retraining.<br><br>
-**Files in this Repository**
-  *Project 1 (1).ipynb*: The main Jupyter Notebook that contains the complete workflow of the project. This includes:
-                          Data loading and initial exploration.
-                          Feature engineering and data preprocessing (e.g., LabelEncoder for categorical features).
-                          Model training (RandomForestRegressor).
-                          Model evaluation.
-                          A custom function predict_ethical_price to demonstrate how to get predictions for new product inputs.
-                          Saving the trained model and label encoders.
+- **Ethical Price Prediction**: Generates a recommended ethical price and an acceptable price range for a given product, category, and city.
 
-  *ethical_pricing_mock_dataset_extended.csv*: The synthetic dataset used to train and test the ethical pricing model. Each row represents a unique product-location combination with various pricing and ethical attributes.
+- **Multi-factor Analysis**: Incorporates a wide array of factors including:
+  - `production_cost`
+  - `fair_wage_multiplier`
+  - `sustainability_score`
+  - `local_demand_index`
+  - `market_avg_price_city`
+  - `profit_margin_standard`
+  - `regulatory_adjustment`
 
-  *ethical_price_model.pkl*: A serialized (pickled) file containing the trained RandomForestRegressor model. This allows for direct loading and use of the model without needing to retrain it.
+- **Machine Learning Powered**: Utilizes a RandomForestRegressor for its ability to handle complex relationships and provide accurate predictions.
 
-  *label_encoders.pkl*: A serialized (pickled) file containing the LabelEncoder objects used for transforming categorical features (item_category, city, marketplace) into numerical representations during training. These are essential for consistent preprocessing when making new predictions.
+- **Comprehensive Dataset**: Built upon `ethical_pricing_mock_dataset_extended.csv`, a detailed mock dataset containing diverse product entries, categories, and geographical locations.
+
+- **Web Interface**: A Flask-based web application where users can input product details and get predictions, comparisons, and history.
+
+- **Model Graphs**: Automatic generation of:
+  - Price distribution plots
+  - Marketplace comparisons
+  - City-level trends
+
+---
+
+## Files in this Repository
+
+```
+├── app.py                   # Flask backend with routing and form handling
+├── model_updated.py        # Prediction model using fairness metrics
+├── ethical_pricing.py      # Initial EDA, training and visualization
+├── templates/
+│   ├── index.html          # User interface
+│   ├── history.html        # View prediction history
+│   └── about.html          # Project description
+├── ethical_pricing_mock_dataset_extended.csv # Dataset
+├── README.md               # Project overview
+```
+
+---
+
+## Routes
+
+- `/` - Main Prediction Interface
+- `/compare` - Compare a product’s price between two cities
+- `/history` - View historical prediction records
+- `/about` - Learn more about the purpose of the tool
+
+---
+
+## Model Details
+
+- **Model**: RandomForestRegressor
+- **Preprocessing**: Label Encoding for `item_category`, `item_name`, `city`
+- **Target Variable**: `base_price`
+- **Evaluation Metrics**:
+  - Price MSE
+  - Ethical Classification Accuracy
+- **Persistence**: Notebooks save trained models and encoders for reuse
